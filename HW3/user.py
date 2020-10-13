@@ -1,4 +1,9 @@
-from Database import *
+##https://docs.python.org/3/library/sqlite3.html
+import sqlite3
+
+conn = sqlite3.connect('Users.db')
+
+c = conn.cursor()
 
 class User:
 
@@ -39,7 +44,15 @@ class User:
         self.address = address
 
     def addUsertoDatabase(self, userName, password, creditCard, address):
-        addUserData(self,userName, password, creditCard, address)
+        userData = (userName, password, creditCard, address)                #place holders for variable substitution. reference sqlite api
+        c.execute("INSERT INTO Users (username, password, credit, address) VALUES (?, ?, ?, ?)", userData)
+    
+        # Save (commit) the changes
+        conn.commit()
+        print("successfully added to database")
+        conn.close()
+        return 0
+
 
     def login():
         pass
@@ -51,10 +64,16 @@ class User:
         pass
 
     def verify(self, userName, password):
-        ##uses the searchUser function from database file to encapsulate better. Probably redundant but idk
-        a = searchUser(self, userName, password)
-        if a == True:
+        userData = (userName, password)
+        ##check if data exists
+        c.execute("SELECT Username, Password FROM Users WHERE Username=? and Password=?", userData)
+
+    
+        exists = c.fetchone() ##returns none if no match
+        #for row in c:
+           # print(row)
+    
+        if exists:
             return True
         else:
             return False
-    
