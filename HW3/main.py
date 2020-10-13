@@ -30,7 +30,8 @@ def main():
         print("\n")
         print("Welcome to the Store, our items are listed below:")
         
-        allItems() ##from database file. Part d of assignment
+        inventory = Inventory()
+        inventory.displayItems() ## part d of assignment
         print("\n")
         print("\n")
         print("Creating cart. Type one item at a time to add to cart")
