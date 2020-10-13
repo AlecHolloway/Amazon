@@ -1,4 +1,8 @@
-from Database import *
+import sqlite3
+
+conn = sqlite3.connect('Users.db')
+
+c = conn.cursor()
 
 class Cart():
     total_cost = 0
