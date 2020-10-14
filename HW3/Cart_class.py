@@ -5,14 +5,28 @@ conn = sqlite3.connect('Users.db')
 c = conn.cursor()
 
 class Cart():
-    total_cost = 0
-    items = {} #dictionary used to store item and qty
-
+    
     def __init__(self): 
         self.cart = "Cart"
+        self.total_cost = 0
+        self.total_item_count = 0
+        self.unique_item_count = 0
+        self.items = {} #dictionary used to store item and qty
 
     def removeFromCart():
         pass
+
+    def addToCart(self, item, amount):
+        ##total_item_count += amount
+        self.unique_item_count += 1
+
+        self.items[self.unique_item_count] = item
+        self.items["%d.qty" % self.unique_item_count] = int(amount)
+
+        print("Successfully added %s %ss to cart!" % (amount, item))
+
+        self.showContents()
+        return 0
     
     #def addToCart(self):
     #    b = 1
@@ -29,6 +43,11 @@ class Cart():
 
     
        # return 0
+
+    def showContents(self):
+        for item in self.items.items():
+            print(item)
+
 
     def confirmPurchase():
         pass

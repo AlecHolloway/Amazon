@@ -1,7 +1,10 @@
 from user import User
-from Database import *
+##from Database import *
 from inventory_class import *
 from Cart_class import *
+
+inventory = Inventory()
+newCart = Cart()
 
 def main():
     print("Welcome to our store\n")
@@ -30,16 +33,14 @@ def main():
         print("\n")
         print("Welcome to the Store, our items are listed below:")
         
-        inventory = Inventory()
+        ##inventory = Inventory()
         inventory.displayItems() ## part d of assignment
         print("\n")
         print("\n")
         print("Creating cart. Type one item at a time to add to cart")
-        #newCart = Cart()
-        #newCart.addToCart()
 
-        
-      
+        WaitForUserToAddItem()
+
 
 
 
@@ -58,5 +59,13 @@ def main():
         newUser.addUsertoDatabase(userName, password, creditCard, address)
         
 
+def WaitForUserToAddItem():
+        item = input("Name of item: ")
+        if inventory.VerifyItemIsInDatabase(item):
+            qty = input("How many? ")
+            print("Adding %s %ss to cart..." % (qty , item))
+            newCart.addToCart(item, qty)
+
+        WaitForUserToAddItem()
 
 main()
