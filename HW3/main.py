@@ -7,8 +7,8 @@ inventory = Inventory()
 newCart = Cart()
 
 def main():
-    print("Welcome to our store\n")
-    choice = input("Login or Create Account 1 or 2: \n")
+    print("Welcome to Amazone!\n")
+    choice = input("Login or Create Account 1 or 2: ")
 
     if choice == "1":
         login()
@@ -17,21 +17,18 @@ def main():
         createAccount()
 
     print("\n")
-    print("Welcome to the Store, our items are listed below:")
+    print("Welcome to Amazone, our items are listed below:")
         
     inventory.displayItems() ## part d of assignment
     print("\n")
-    print("\n")
-    print("Creating cart. Type one item at a time to add to cart")
 
     WaitForUserToChooseOption()
 
 def login():
     n = 'y'
     while(n == 'y'):
-        print("Enter Credentials\n")
-        userName = input("Enter username: \n")
-        password = input("Enter password: \n")
+        userName = input("Enter username: ")
+        password = input("Enter password: ")
         user = User(userName, password)
         a = user.verify(userName, password)
         if(a == True):
@@ -51,12 +48,11 @@ def createAccount():
     newUser = User(userName, password)
     newUser.addUsertoDatabase(userName, password, creditCard, address)
         
-
 def WaitForUserToAddOrRemoveItem(choice):
     inventory.displayItems()
 
     if choice == 1:
-        item = input("Name of item: ")
+        item = input("What item would you like to add to cart? ")
         if inventory.VerifyItemIsInDatabase(item):
             qty = input("How many? ")
             print("Adding %s %ss to cart..." % (qty , item))
@@ -102,6 +98,5 @@ def WaitForUserToChooseOption():
     else:
         print("Incorrect input. Please try again\n")
         WaitForUserToChooseOption()
-
 
 main()

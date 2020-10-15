@@ -17,8 +17,8 @@ class Cart():
         if self.items.__contains__(item):
             current = self.items.get(item)
             updated = current - int(amount)
-            if updated < 0:
-                self.items[item] = 0
+            if updated <= 0:
+                self.items.pop(item)
             else:
                 self.items[item] = updated
 
@@ -44,11 +44,9 @@ class Cart():
         self.showContents()
         return 0
            
-
     def showContents(self):
         for item in self.items.items():
             print(item)
-
 
     def confirmPurchase():
         pass
