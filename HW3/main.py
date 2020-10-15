@@ -6,6 +6,7 @@ from Cart_class import *
 inventory = Inventory()
 newCart = Cart()
 
+total = 0
 def main():
     print("Welcome to Amazone!\n")
     choice = input("Login or Create Account 1 or 2: ")
@@ -52,11 +53,16 @@ def WaitForUserToAddOrRemoveItem(choice):
     inventory.displayItems()
 
     if choice == 1:
+        ##total_cost = 0
         item = input("What item would you like to add to cart? ")
         if inventory.VerifyItemIsInDatabase(item):
             qty = input("How many? ")
             print("Adding %s %ss to cart..." % (qty , item))
             newCart.addToCart(item, qty)
+
+            total_cost = newCart.updateCost(item, qty, 1)
+            print("Total: ", total_cost) 
+            
 
         else:
             print("Could not find item in database!\n")
@@ -64,13 +70,18 @@ def WaitForUserToAddOrRemoveItem(choice):
 
     elif choice == 2:
         item = input("Name of item: ")
-        if inventory.VerifyItemIsInDatabase(item):
-            qty = input("How many? ")
+        #if inventory.VerifyItemIsInDatabase(item):
+        qty = input("How many? ")
+        if newCart.isInCart(item, qty):
             print("Removing %s %ss from cart..." % (qty , item))
             newCart.removeFromCart(item, qty)
 
+           
+            total_cost = newCart.updateCost(item, qty, 0)
+            print("Total: ", total_cost)
+
         else:
-            print("Could not find item in database!\n")
+            print("Could not find item in Cart!\n")
             WaitForUserToChooseOption()
 
 def WaitForUserToChooseOption():
