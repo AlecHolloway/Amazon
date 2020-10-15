@@ -18,6 +18,16 @@ class Inventory():
     def removeItems():
         pass
 
+    def VerifyItemIsInDatabase(self, string):
+        c.execute("SELECT Name FROM Inventory WHERE Name = '%s'" % string)
+        item = c.fetchone()
+        if item:
+            return True
+
+        else:
+            print("ERROR: Item not found in database")
+            return False
+
 
 
 
