@@ -60,9 +60,6 @@ class User:
     def logout():
         pass
 
-    def viewPastPurchases():
-        pass
-
     def verify(self, userName, password):
         userData = (userName, password)
         ##check if data exists
