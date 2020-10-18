@@ -36,19 +36,7 @@ def main():
         newUser = User(username, password)
         newUser.addUsertoDatabase(username, password, creditCard, address)
 
-        #print("\n")
-        #print("Welcome to Amazon, our items are listed below:")
-        
-       # inventory.displayItems() ## part d of assignment
-        #print("\n")
-
-   # while True:
-      #  print("1: Add items to cart\n2: Remove items from cart\n3: View cart\n4: Checkout\n5: Exit")
-        #try:
-        #option = None
-       # except:
-        #    print("Incorrect input. Please try again\n")
-         #   WaitForUserToChooseOption()
+       
 def customerChoice(username, password):
     while True:
         print("1: Add items to cart\n2: Remove items from cart\n3: View cart\n4: Checkout \n5: View Pass Purchases \n6: Logout")
@@ -66,8 +54,7 @@ def customerChoice(username, password):
                 print("Total: ", total_cost)
             else:
                 print("Could not find item in database!\n")
-               # WaitForUserToChooseOption()
-                
+               
                 
                 
                 
