@@ -58,7 +58,7 @@ class User:
         pass
 
     def logout():
-        pass
+        exit()
 
     def verify(self, userName, password):
         userData = (userName, password)
