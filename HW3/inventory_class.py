@@ -13,7 +13,12 @@ class Inventory():
         return 0
 
     def addItems():
-        pass
+        itemData = (name, qty, price, description)
+        c.execute("INSERT INTO Inventory (Name, Quantity, Price, Description) VALUES (?, ?, ?, ? )", itemData)
+        # Save (commit) the changes
+        conn.commit()
+        print("successfully added to database")
+        conn.close()
 
     def removeItems():
         pass
