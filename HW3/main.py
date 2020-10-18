@@ -51,7 +51,7 @@ def main():
          #   WaitForUserToChooseOption()
 def customerChoice(username, password):
     while True:
-        print("1: Add items to cart\n2: Remove items from cart\n3: View cart\n4: Checkout \n5: View Pass Purchases \n6: Exit")
+        print("1: Add items to cart\n2: Remove items from cart\n3: View cart\n4: Checkout \n5: View Pass Purchases \n6: Logout")
         option = int(input("What would you like to do? "))
         if option == 1:
             inventory.displayItems() ## part d of assignment
@@ -93,7 +93,7 @@ def customerChoice(username, password):
         elif option == 5:
             inventory.viewPastPurchases(username)
         elif option == 6:
-            exit()
+            User.logout()
         else:
             print("Incorrect input. Please try again\n")
                 
