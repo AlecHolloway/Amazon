@@ -13,7 +13,12 @@ class Inventory():
         return 0
 
     def addItems():
-        pass
+        itemData = (name, qty, price, description)
+        c.execute("INSERT INTO Inventory (Name, Quantity, Price, Description) VALUES (?, ?, ?, ? )", itemData)
+        # Save (commit) the changes
+        conn.commit()
+        print("successfully added to database")
+        conn.close()
 
     def removeItems():
         pass
@@ -28,7 +33,13 @@ class Inventory():
             print("ERROR: Item not found in database")
             return False
 
-
+    #probably should go in the user class but I had to change a lot of code to do that
+    ## this was easier
+    def viewPastPurchases(self, username):
+        c.execute("SELECT * FROM PurchaseHistory WHERE User = '%s'" % username)
+        item = c.fetchall()
+        print(item)
+        
 
 
 

@@ -58,10 +58,7 @@ class User:
         pass
 
     def logout():
-        pass
-
-    def viewPastPurchases():
-        pass
+        exit()
 
     def verify(self, userName, password):
         userData = (userName, password)

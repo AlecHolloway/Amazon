@@ -1,102 +1,90 @@
 from user import User
-##from Database import *
 from inventory_class import *
 from Cart_class import *
 
 inventory = Inventory()
 newCart = Cart()
 
+total = 0
 def main():
-    print("Welcome to Amazone!\n")
+
+    print("Welcome to Amazon!\n")
     choice = input("Login or Create Account 1 or 2: ")
 
     if choice == "1":
-        login()
+        n = 'y'
+        while(n == 'y'):
+            username = input("Enter username: ")
+            password = input("Enter password: ")
+            user = User(username, password)
+            a = user.verify(username, password)
+            if(a == True):
+                print("Sucessfully logged in")
+                n = 1
+                customerChoice(username, password)
+            else:
+                print("Error logging in")
+                n = input("Try again? y/n") ## iterate until successful attempt
        
     if choice == "2":
-        createAccount()
-
-    print("\n")
-    print("Welcome to Amazone, our items are listed below:")
-        
-    inventory.displayItems() ## part d of assignment
-    print("\n")
-
-    WaitForUserToChooseOption()
-
-def login():
-    n = 'y'
-    while(n == 'y'):
+        print("Create new account\n")
         userName = input("Enter username: ")
         password = input("Enter password: ")
-        user = User(userName, password)
-        a = user.verify(userName, password)
-        if(a == True):
-            print("Sucessfully logged in")
-            n = 1
-        else:
-            print("Error logging in")
-            n = input("Try again? y/n") ## iterate until successful attempt
+        creditCard = input("Enter Credit Card Number: ")
+        address = input("Enter address: ")
 
-def createAccount():
-    print("Create new account\n")
-    userName = input("Enter username: ")
-    password = input("Enter password: ")
-    creditCard = input("Enter Credit Card Number: ")
-    address = input("Enter address: ")
+        newUser = User(username, password)
+        newUser.addUsertoDatabase(username, password, creditCard, address)
 
-    newUser = User(userName, password)
-    newUser.addUsertoDatabase(userName, password, creditCard, address)
-        
-def WaitForUserToAddOrRemoveItem(choice):
-    inventory.displayItems()
-
-    if choice == 1:
-        item = input("What item would you like to add to cart? ")
-        if inventory.VerifyItemIsInDatabase(item):
-            qty = input("How many? ")
-            print("Adding %s %ss to cart..." % (qty , item))
-            newCart.addToCart(item, qty)
-
-        else:
-            print("Could not find item in database!\n")
-            WaitForUserToChooseOption()
-
-    elif choice == 2:
-        item = input("Name of item: ")
-        if inventory.VerifyItemIsInDatabase(item):
-            qty = input("How many? ")
-            print("Removing %s %ss from cart..." % (qty , item))
-            newCart.removeFromCart(item, qty)
-
-        else:
-            print("Could not find item in database!\n")
-            WaitForUserToChooseOption()
-
-def WaitForUserToChooseOption():
-    print("1: Add items to cart\n2: Remove items from cart\n3: View cart\n4: Checkout\n5: Exit")
-    try:
+       
+def customerChoice(username, password):
+    while True:
+        print("1: Add items to cart\n2: Remove items from cart\n3: View cart\n4: Checkout \n5: View Pass Purchases \n6: Logout")
         option = int(input("What would you like to do? "))
-    except:
-        print("Incorrect input. Please try again\n")
-        WaitForUserToChooseOption()
+        if option == 1:
+            inventory.displayItems() ## part d of assignment
+            print("\n")
+            item = input("What item would you like to add to cart? ")
+            if inventory.VerifyItemIsInDatabase(item):
+                qty = input("How many? ")
+                print("Adding %s %ss to cart..." % (qty , item))
+                newCart.addToCart(item, qty)
 
-    if option == 1 or option == 2:
-        WaitForUserToAddOrRemoveItem(option)
-        WaitForUserToChooseOption()
+                total_cost = newCart.updateCost(item, qty, 1)
+                print("Total: ", total_cost)
+            else:
+                print("Could not find item in database!\n")
+               
+                
+                
+                
+        elif option == 2:
+            item = input("Name of item: ")
+            qty = input("How many? ")
+            if newCart.isInCart(item, qty):
+                print("Removing %s %ss from cart..." % (qty , item))
+                newCart.removeFromCart(item, qty)
 
-    elif option == 3:
-        newCart.showContents()
-        WaitForUserToChooseOption()
+           
+                total_cost = newCart.updateCost(item, qty, 0)
+                print("Total: ", total_cost)
 
-    elif option == 4:
-        WaitForUserToChooseOption()
+            else:
+                print("Could not find item in Cart!\n")
+                WaitForUserToChooseOption()
 
-    elif option == 5:
-        exit()
+        elif option == 3:
+            newCart.showContents()
+        elif option == 4:
+            newCart.checkOut(username, password)
+        elif option == 5:
+            inventory.viewPastPurchases(username)
+        elif option == 6:
+            User.logout()
+        else:
+            print("Incorrect input. Please try again\n")
+                
 
-    else:
-        print("Incorrect input. Please try again\n")
-        WaitForUserToChooseOption()
+
 
 main()
